@@ -95,7 +95,7 @@ export default function Shop() {
             ))}
           </div>
         ) : filteredProducts.length === 0 ? (
-          <div className="text-center py-24 text-gray-400 glass-panel rounded-3xl mt-8">
+          <div className="text-center py-24 text-slate-500 dark:text-gray-400 glass-panel rounded-3xl mt-8">
             <p>No products found matching your criteria.</p>
             <button 
               onClick={() => { setSelectedCategory(''); setPriceRange([0, 200]); }}
