@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 
 interface Product {
   id: string;
@@ -13,7 +14,7 @@ interface ProductCardProps {
   product: Product;
 }
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: { 
     opacity: 1, 

@@ -18,22 +18,22 @@ export default function CartDrawer() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeCart}
-            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[60]"
+            className="fixed inset-0 bg-slate-900/10 dark:bg-black/30 backdrop-blur-sm z-[60]"
           />
           <motion.div
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-y-0 right-0 w-full max-w-md bg-[#030014]/60 backdrop-blur-3xl shadow-[-10px_0_30px_rgba(0,0,0,0.5)] border-l border-white/10 z-[70] flex flex-col pointer-events-auto"
+            className="fixed inset-y-0 right-0 w-full max-w-md bg-white dark:bg-[#030014]/60 backdrop-blur-3xl shadow-[-10px_0_30px_rgba(0,0,0,0.1)] dark:shadow-[-10px_0_30px_rgba(0,0,0,0.5)] border-l border-slate-200 dark:border-white/10 z-[70] flex flex-col pointer-events-auto"
           >
-            <div className="flex items-center justify-between p-6 border-b border-white/10">
-              <h2 className="text-lg font-medium text-white flex items-center gap-2 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
-                <ShoppingBag className="w-5 h-5" /> Your Cart
+            <div className="flex items-center justify-between p-6 border-b border-slate-200 dark:border-white/10">
+              <h2 className="text-lg font-medium text-slate-900 dark:text-white flex items-center gap-2 drop-shadow-[0_0_8px_rgba(0,0,0,0.1)] dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
+                <ShoppingBag className="w-5 h-5 text-[#0511bb]" /> Your Cart
               </h2>
               <button 
                 onClick={closeCart}
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -41,10 +41,10 @@ export default function CartDrawer() {
 
             <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
               {items.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-gray-400 space-y-4">
+                <div className="h-full flex flex-col items-center justify-center text-slate-400 dark:text-gray-400 space-y-4">
                   <ShoppingBag className="w-12 h-12 opacity-20" />
                   <p>Your cart is empty.</p>
-                  <Button variant="outline" onClick={closeCart}>Continue Shopping</Button>
+                  <Button variant="outline" onClick={closeCart} className="border-[#0511bb] text-[#0511bb]">Continue Shopping</Button>
                 </div>
               ) : (
                 <motion.ul 
@@ -78,26 +78,26 @@ export default function CartDrawer() {
                         </div>
                       )}
                       <div className="flex-1 flex flex-col">
-                        <div className="flex justify-between text-base font-medium text-white">
+                        <div className="flex justify-between text-base font-semibold text-slate-900 dark:text-white">
                           <h3>{item.name}</h3>
-                          <p className="ml-4 pl-2 drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">${item.price.toFixed(2)}</p>
+                          <p className="ml-4 pl-2 drop-shadow-[0_0_8px_rgba(5,17,187,0.1)]">${item.price.toFixed(2)}</p>
                         </div>
-                        <div className="mt-1 flex text-sm text-gray-400 space-x-2">
+                        <div className="mt-1 flex text-xs text-slate-500 dark:text-gray-400 space-x-2">
                           {item.color && <p>Color: {item.color}</p>}
                           {item.size && <p>Size: {item.size}</p>}
                         </div>
                         <div className="flex-1 flex items-end justify-between text-sm mt-3">
-                          <div className="flex items-center border border-white/20 rounded-lg overflow-hidden bg-white/5 backdrop-blur-sm">
+                          <div className="flex items-center border border-slate-200 dark:border-white/20 rounded-lg overflow-hidden bg-slate-100 dark:bg-white/5 backdrop-blur-sm">
                             <button 
                               onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                              className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+                              className="w-8 h-8 flex items-center justify-center text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/10 transition-colors"
                             >
                               <Minus className="w-3 h-3" />
                             </button>
-                            <span className="w-8 text-center text-gray-200">{item.quantity}</span>
+                            <span className="w-8 text-center text-slate-900 dark:text-gray-200 font-medium">{item.quantity}</span>
                             <button 
                               onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                              className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+                              className="w-8 h-8 flex items-center justify-center text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/10 transition-colors"
                             >
                               <Plus className="w-3 h-3" />
                             </button>
@@ -118,15 +118,15 @@ export default function CartDrawer() {
             </div>
 
             {items.length > 0 && (
-              <div className="border-t border-white/10 p-6 space-y-4 bg-white/5 backdrop-blur-md">
-                <div className="flex justify-between text-base font-medium text-white">
+              <div className="border-t border-slate-200 dark:border-white/10 p-6 space-y-4 bg-slate-50 dark:bg-white/5 backdrop-blur-md">
+                <div className="flex justify-between text-base font-semibold text-slate-900 dark:text-white">
                   <p>Subtotal</p>
-                  <p className="drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">${subtotal.toFixed(2)}</p>
+                  <p className="drop-shadow-[0_0_8px_rgba(5,17,187,0.1)]">${subtotal.toFixed(2)}</p>
                 </div>
-                <p className="text-sm text-gray-400">Shipping and taxes calculated at checkout.</p>
+                <p className="text-sm text-slate-500 dark:text-gray-400">Shipping and taxes calculated at checkout.</p>
                 <div className="grid grid-cols-2 gap-4">
                   <Link to="/cart" onClick={closeCart}>
-                    <Button variant="outline" className="w-full h-12">View Cart</Button>
+                    <Button variant="outline" className="w-full h-12 border-slate-200 dark:border-white/10">View Cart</Button>
                   </Link>
                   <Link to="/checkout" onClick={closeCart}>
                     <Button className="w-full h-12 primary-gradient border-none">Checkout</Button>

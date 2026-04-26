@@ -90,10 +90,10 @@ export default function Navbar() {
           </AnimatePresence>
         </button>
 
-        <Link to="/dashboard" className="text-gray-400 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">
+        <Link to="/dashboard" className="text-slate-500 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">
           <User className="w-5 h-5" />
         </Link>
-        <button onClick={openCart} className="relative text-gray-400 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">
+        <button onClick={openCart} className="relative text-slate-500 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">
           <ShoppingBag className="w-5 h-5" />
           <AnimatePresence>
             {itemCount > 0 && (

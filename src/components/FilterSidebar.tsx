@@ -104,7 +104,7 @@ function FilterContent({
                     />
                     <div className="absolute w-2.5 h-2.5 bg-[#0511bb] rounded-full opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none shadow-[0_0_8px_rgba(5,17,187,0.8)]"></div>
                   </div>
-                  <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">{category}</span>
+                  <span className="text-sm text-slate-500 dark:text-gray-400 font-medium group-hover:text-slate-900 dark:group-hover:text-white transition-colors">{category}</span>
                 </label>
               ))}
             </div>
@@ -141,7 +141,7 @@ function FilterContent({
                   className={`px-4 h-10 rounded-lg text-sm flex items-center justify-center transition-all duration-300 ${
                     selectedColor === color
                       ? 'primary-gradient text-white border border-transparent'
-                      : 'bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-gray-400 hover:border-[#0511bb] hover:text-[#0511bb]'
+                      : 'bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-gray-400 font-medium hover:border-[#0511bb] hover:text-[#0511bb]'
                   }`}
                 >
                   {color}

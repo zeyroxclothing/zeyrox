@@ -115,7 +115,7 @@ export default function ProductDetails() {
 
         {/* Product Info */}
         <div className="w-full md:w-1/2 flex flex-col glass-panel p-8 rounded-3xl">
-          <p className="text-sm text-[#0511bb] dark:text-blue-400 mb-2 font-medium tracking-wide">{displayProduct.category}</p>
+          <p className="text-sm text-[#0511bb] dark:text-blue-400 mb-2 font-bold tracking-wider uppercase">{displayProduct.category}</p>
           <h1 className="text-3xl font-bold tracking-tight mb-2 text-slate-900 dark:text-white drop-shadow-[0_0_8px_rgba(5,17,187,0.1)] dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">{displayProduct.name}</h1>
           <p className="text-2xl font-medium mb-6 text-slate-800 dark:text-gray-200">${displayProduct.price.toFixed(2)}</p>
 
@@ -194,16 +194,16 @@ export default function ProductDetails() {
               Add to Cart - ${(displayProduct.price).toFixed(2)}
             </Button>
           </div>
-          <p className="text-sm text-gray-400 text-center mb-8">
+          <p className="text-sm text-slate-500 dark:text-gray-400 text-center mb-8">
             {MOCK_PRODUCT.stock > 0 ? (
-              <span className="text-[#0511bb] font-medium drop-shadow-[0_0_5px_rgba(5,17,187,0.5)]">In Stock ({MOCK_PRODUCT.stock} items left)</span>
+              <span className="text-[#0511bb] dark:text-blue-400 font-bold drop-shadow-[0_0_5px_rgba(5,17,187,0.2)]">In Stock ({MOCK_PRODUCT.stock} items left)</span>
             ) : 'Out of stock'}
           </p>
 
-          <div className="border-t border-white/10 pt-6 mt-4 space-y-4 text-sm text-gray-400">
-            <div className="flex items-center gap-3"><Truck className="w-5 h-5 text-[#0511bb] opacity-80" /> Free shipping over $100</div>
-            <div className="flex items-center gap-3"><ShieldCheck className="w-5 h-5 text-blue-400 opacity-80" /> Lifetime quality guarantee</div>
-            <div className="flex items-center gap-3"><RotateCcw className="w-5 h-5 text-[#0511bb] opacity-80" /> Free returns within 30 days</div>
+          <div className="border-t border-slate-200 dark:border-white/10 pt-6 mt-4 space-y-4 text-sm text-slate-500 dark:text-gray-400">
+            <div className="flex items-center gap-3"><Truck className="w-5 h-5 text-[#0511bb] dark:text-blue-400" /> Free shipping over $100</div>
+            <div className="flex items-center gap-3"><ShieldCheck className="w-5 h-5 text-blue-500 dark:text-blue-400" /> Lifetime quality guarantee</div>
+            <div className="flex items-center gap-3"><RotateCcw className="w-5 h-5 text-[#0511bb] dark:text-blue-400" /> Free returns within 30 days</div>
           </div>
         </div>
       </div>
