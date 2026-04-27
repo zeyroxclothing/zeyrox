@@ -13,17 +13,36 @@ declare global {
   }
 }
 
+import { orderService } from '../services/orderService';
+
 export default function Checkout() {
   const navigate = useNavigate();
   const { items, getTotals, clearCart } = useCartStore();
   const { subtotal } = getTotals();
   const [isProcessing, setIsProcessing] = useState(false);
+  
+  const [formData, setFormData] = useState({
+    email: '',
+    firstName: '',
+    lastName: '',
+    address: '',
+    apartment: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    phone: '',
+  });
 
   useEffect(() => {
     if (items.length === 0) {
       navigate('/cart');
     }
   }, [items, navigate]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   const loadRazorpayScript = () => {
     return new Promise((resolve) => {
@@ -47,25 +66,52 @@ export default function Checkout() {
         return;
       }
 
-      // Mock options for frontend-only Razorpay integration
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY || 'rzp_test_stubkey', // Fallback to avoid crash
-        amount: Math.round(subtotal * 100), // amount in smallest currency unit (cents, paise)
+        key: import.meta.env.VITE_RAZORPAY_KEY || 'rzp_test_stubkey',
+        amount: Math.round(subtotal * 100),
         currency: 'USD',
         name: 'Zeyrox Clothing',
         description: 'Order Payment',
-        handler: function (response: any) {
-          toast.success(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
-          clearCart();
-          navigate('/dashboard'); // Navigate to dashboard/orders
+        handler: async function (response: any) {
+          try {
+            // Save order to Supabase
+            await orderService.createOrder({
+              email: formData.email,
+              total_amount: subtotal,
+              shipping_address: {
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                address: formData.address,
+                apartment: formData.apartment,
+                city: formData.city,
+                state: formData.state,
+                zipCode: formData.zipCode,
+                phone: formData.phone,
+              },
+              items: items.map(item => ({
+                productId: item.productId,
+                quantity: item.quantity,
+                price: item.price,
+                size: item.size,
+                color: item.color,
+              }))
+            });
+
+            toast.success('Order placed successfully!');
+            clearCart();
+            navigate('/dashboard');
+          } catch (err: any) {
+            console.error('Order creation failed:', err);
+            toast.error('Payment successful but failed to save order. Please contact support.');
+          }
         },
         prefill: {
-          name: 'Jane Doe',
-          email: 'jane@example.com',
-          contact: '9999999999',
+          name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email,
+          contact: formData.phone,
         },
         theme: {
-          color: '#000000',
+          color: '#0511bb',
         },
       };
 
@@ -91,23 +137,84 @@ export default function Checkout() {
         <form onSubmit={handlePayment} className="space-y-8">
           <div>
             <h2 className="text-lg font-medium mb-4 text-white">Contact Information</h2>
-            <Input type="email" placeholder="Email address" required className="mb-4" />
+            <Input 
+              type="email" 
+              name="email"
+              placeholder="Email address" 
+              value={formData.email}
+              onChange={handleInputChange}
+              required 
+              className="mb-4" 
+            />
           </div>
 
           <div>
             <h2 className="text-lg font-medium mb-4 text-white">Shipping Address</h2>
             <div className="grid grid-cols-2 gap-4 mb-4">
-              <Input placeholder="First name" required />
-              <Input placeholder="Last name" required />
+              <Input 
+                name="firstName"
+                placeholder="First name" 
+                value={formData.firstName}
+                onChange={handleInputChange}
+                required 
+              />
+              <Input 
+                name="lastName"
+                placeholder="Last name" 
+                value={formData.lastName}
+                onChange={handleInputChange}
+                required 
+              />
             </div>
-            <Input placeholder="Address" required className="mb-4" />
-            <Input placeholder="Apartment, suite, etc. (optional)" className="mb-4" />
+            <Input 
+              name="address"
+              placeholder="Address" 
+              value={formData.address}
+              onChange={handleInputChange}
+              required 
+              className="mb-4" 
+            />
+            <Input 
+              name="apartment"
+              placeholder="Apartment, suite, etc. (optional)" 
+              value={formData.apartment}
+              onChange={handleInputChange}
+              className="mb-4" 
+            />
             <div className="grid grid-cols-3 gap-4 mb-4">
-              <Input placeholder="City" required className="col-span-1" />
-              <Input placeholder="State" required className="col-span-1" />
-              <Input placeholder="ZIP code" required className="col-span-1" />
+              <Input 
+                name="city"
+                placeholder="City" 
+                value={formData.city}
+                onChange={handleInputChange}
+                required 
+                className="col-span-1" 
+              />
+              <Input 
+                name="state"
+                placeholder="State" 
+                value={formData.state}
+                onChange={handleInputChange}
+                required 
+                className="col-span-1" 
+              />
+              <Input 
+                name="zipCode"
+                placeholder="ZIP code" 
+                value={formData.zipCode}
+                onChange={handleInputChange}
+                required 
+                className="col-span-1" 
+              />
             </div>
-            <Input placeholder="Phone" type="tel" required />
+            <Input 
+              name="phone"
+              placeholder="Phone" 
+              type="tel" 
+              value={formData.phone}
+              onChange={handleInputChange}
+              required 
+            />
           </div>
 
           <Button type="submit" size="lg" className="w-full primary-gradient border-none rounded-xl h-14 text-lg" isLoading={isProcessing}>

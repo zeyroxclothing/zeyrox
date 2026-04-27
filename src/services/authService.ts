@@ -7,13 +7,7 @@ export const authService = {
       password,
     });
     if (error) {
-      if (error.status === 0 || error.message.includes('FetchError')) {
-         console.warn("Supabase not fully setup, mocking login");
-         return {
-           user: { id: 'mock-user', email },
-           session: { access_token: 'mock-token' }
-         }
-      }
+      console.error("Supabase Auth Error:", error.message, error.status);
       throw error;
     }
     return data;
@@ -30,13 +24,7 @@ export const authService = {
       },
     });
     if (error) {
-       if (error.status === 0 || error.message.includes('FetchError')) {
-         console.warn("Supabase not fully setup, mocking signup");
-         return {
-           user: { id: 'mock-user', email, user_metadata: { full_name: name } },
-           session: { access_token: 'mock-token' }
-         }
-      }
+      console.error("Supabase Signup Error:", error.message, error.status);
       throw error;
     }
     return data;
@@ -44,13 +32,13 @@ export const authService = {
 
   async signOut() {
     const { error } = await supabase.auth.signOut();
-    if (error && error.status !== 0) throw error;
+    if (error) throw error;
   },
 
   async getSession() {
     const { data, error } = await supabase.auth.getSession();
     if (error) {
-       console.warn('Get session error', error);
+       console.error('Get session error', error);
        return { session: null };
     }
     return data;

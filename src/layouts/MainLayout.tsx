@@ -8,12 +8,15 @@ import CartDrawer from '../components/CartDrawer';
 import PageTransition from '../components/PageTransition';
 
 import { authService } from '../services/authService';
+import { cartService } from '../services/cartService';
 import { useAuthStore } from '../store/authStore';
+import { useCartStore } from '../store/cartStore';
 
 export default function MainLayout() {
   const location = useLocation();
   const { theme } = useThemeStore();
-  const { setSession, setUser } = useAuthStore();
+  const { setSession, setUser, setInitialized } = useAuthStore();
+  const { setItems, items } = useCartStore();
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -25,14 +28,38 @@ export default function MainLayout() {
 
   useEffect(() => {
     const restoreSession = async () => {
-      const { session } = await authService.getSession();
-      if (session) {
-        setSession(session);
-        setUser(session.user);
+      try {
+        const { session } = await authService.getSession();
+        if (session) {
+          setSession(session);
+          setUser(session.user);
+          
+          // Fetch backend cart
+          const remoteCart = await cartService.getCart(session.user.id);
+          if (remoteCart && remoteCart.length > 0) {
+            setItems(remoteCart);
+          }
+        }
+      } finally {
+        setInitialized(true);
       }
     };
     restoreSession();
   }, []);
+
+  // Sync cart to backend on changes
+  useEffect(() => {
+    const sync = async () => {
+      const { user } = useAuthStore.getState();
+      if (user && items.length > 0) {
+        // Debounce or optimize this in a real app, but for now simple sync
+        for (const item of items) {
+          await cartService.syncItem(user.id, item);
+        }
+      }
+    };
+    sync();
+  }, [items]);
 
   return (
     <div className={`flex flex-col min-h-screen relative transition-colors duration-300 ${theme === 'dark' ? 'text-gray-100' : 'text-slate-900'}`}>

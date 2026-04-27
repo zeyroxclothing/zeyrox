@@ -39,7 +39,7 @@ export default function Shop() {
     }
   };
 
-  const displayProducts = (isError || products.length === 0) && !isLoading ? MOCK_PRODUCTS : products;
+  const displayProducts = products;
 
   const filteredProducts = useMemo(() => {
     return displayProducts

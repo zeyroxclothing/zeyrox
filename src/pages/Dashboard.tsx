@@ -8,15 +8,15 @@ import { designService } from '../services/designService';
 import { Button } from '../components/ui/Button';
 
 export default function Dashboard() {
-  const { user, setUser, setSession } = useAuthStore();
+  const { user, setUser, setSession, isInitialized } = useAuthStore();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'profile' | 'orders' | 'designs'>('profile');
 
   useEffect(() => {
-    if (!user) {
+    if (isInitialized && !user) {
       navigate('/login');
     }
-  }, [user, navigate]);
+  }, [user, navigate, isInitialized]);
 
   const { data: designs } = useQuery({
     queryKey: ['user-designs', user?.id],

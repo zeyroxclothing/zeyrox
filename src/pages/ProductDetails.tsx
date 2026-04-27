@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { Check, ShieldCheck, Truck, RotateCcw } from 'lucide-react';
@@ -29,6 +29,7 @@ const COLORS = ['Black', 'White', 'Heather Gray'];
 
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const addItem = useCartStore((state) => state.addItem);
   const openCart = useCartStore((state) => state.openCart);
 
@@ -43,7 +44,16 @@ export default function ProductDetails() {
     retry: false,
   });
 
-  const displayProduct = isError || !product ? MOCK_PRODUCT : product;
+  const displayProduct = product;
+
+  if (isError || !displayProduct && !isLoading) {
+    return (
+      <div className="max-w-7xl mx-auto px-6 py-12 text-center relative z-10">
+        <h2 className="text-2xl font-bold mb-4">Product not found</h2>
+        <Button onClick={() => navigate('/shop')}>Back to Shop</Button>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
