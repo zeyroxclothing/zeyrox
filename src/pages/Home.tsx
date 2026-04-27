@@ -38,7 +38,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen relative">
       {/* Top Banner */}
-      <div className="primary-gradient text-white text-[10px] sm:text-xs text-center py-2 font-medium tracking-wide">
+      <div className="primary-gradient text-white text-xs sm:text-sm text-center py-3 font-bold tracking-widest">
         FREE SHIPPING ON ORDERS OVER $100
       </div>
 
