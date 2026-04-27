@@ -7,9 +7,13 @@ import Footer from '../components/Footer';
 import CartDrawer from '../components/CartDrawer';
 import PageTransition from '../components/PageTransition';
 
+import { authService } from '../services/authService';
+import { useAuthStore } from '../store/authStore';
+
 export default function MainLayout() {
   const location = useLocation();
   const { theme } = useThemeStore();
+  const { setSession, setUser } = useAuthStore();
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -18,6 +22,17 @@ export default function MainLayout() {
       document.documentElement.classList.remove('dark');
     }
   }, [theme]);
+
+  useEffect(() => {
+    const restoreSession = async () => {
+      const { session } = await authService.getSession();
+      if (session) {
+        setSession(session);
+        setUser(session.user);
+      }
+    };
+    restoreSession();
+  }, []);
 
   return (
     <div className={`flex flex-col min-h-screen relative transition-colors duration-300 ${theme === 'dark' ? 'text-gray-100' : 'text-slate-900'}`}>
