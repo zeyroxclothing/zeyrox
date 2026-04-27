@@ -41,7 +41,7 @@ const CATEGORIES = [
   { name: 'Accessories', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=600', path: '/shop?category=Accessories' },
 ];
 
-const MARQUEE_CONTENT = ["LUXURY ESSENTIALS", "ETHICALLY MADE", "CRAFTED FOR QUALITY", "SUSTAINABLE FABRICS", "DESIGNED TO LAST", "ZEYROX • 2024"];
+const MARQUEE_CONTENT = ["LUXURY ESSENTIALS", "ETHICALLY MADE", "CRAFTED FOR QUALITY", "SUSTAINABLE FABRICS", "DESIGNED TO LAST", "ZEYROX • 2026"];
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
