@@ -72,7 +72,7 @@ export default function Checkout() {
         currency: 'USD',
         name: 'Zeyrox Clothing',
         description: 'Order Payment',
-        handler: async function (response: any) {
+        handler: async function (_response: any) {
           try {
             // Save order to Supabase
             await orderService.createOrder({

@@ -46,15 +46,6 @@ export default function ProductDetails() {
 
   const displayProduct = product;
 
-  if (isError || !displayProduct && !isLoading) {
-    return (
-      <div className="max-w-7xl mx-auto px-6 py-12 text-center relative z-10">
-        <h2 className="text-2xl font-bold mb-4">Product not found</h2>
-        <Button onClick={() => navigate('/shop')}>Back to Shop</Button>
-      </div>
-    );
-  }
-
   if (isLoading) {
     return (
       <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row gap-12 relative z-10">
@@ -64,6 +55,15 @@ export default function ProductDetails() {
           <Skeleton className="w-1/4 h-6 bg-white/10 rounded-lg" />
           <Skeleton className="w-full h-32 bg-white/10 rounded-2xl" />
         </div>
+      </div>
+    );
+  }
+
+  if (isError || !displayProduct) {
+    return (
+      <div className="max-w-7xl mx-auto px-6 py-12 text-center relative z-10">
+        <h2 className="text-2xl font-bold mb-4">Product not found</h2>
+        <Button onClick={() => navigate('/shop')}>Back to Shop</Button>
       </div>
     );
   }

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, ShieldCheck, Truck, RotateCcw, Zap, Sparkles, Mail } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Truck, RotateCcw, Zap, Mail } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import Marquee from '../components/Marquee';
 

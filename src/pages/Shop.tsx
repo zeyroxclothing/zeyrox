@@ -4,15 +4,8 @@ import { productService } from '../services/productService';
 import FilterSidebar from '../components/FilterSidebar';
 import ProductCard from '../components/ProductCard';
 import { Skeleton } from '../components/ui/Skeleton';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { LayoutGrid, List, SlidersHorizontal } from 'lucide-react';
-
-const MOCK_PRODUCTS = [
-  { id: '1', name: 'Oversized Essential Premium Tee', price: 35.00, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800', category: 'T-Shirts' },
-  { id: '2', name: 'Minimalist Heavyweight Hoodie', price: 65.00, image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&q=80&w=800', category: 'Hoodies' },
-  { id: '3', name: 'Relaxed Fit Cargo Pants', price: 85.00, image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&q=80&w=800', category: 'Bottoms' },
-  { id: '4', name: 'Signature Boxy Crop Top', price: 28.00, image: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=800', category: 'T-Shirts' }
-];
 
 const CATEGORIES = ['T-Shirts', 'Hoodies', 'Bottoms', 'Accessories'];
 const SIZES = ['S', 'M', 'L', 'XL'];
@@ -26,7 +19,7 @@ export default function Shop() {
   const [sortBy, setSortBy] = useState('newest');
   const [showFilters, setShowFilters] = useState(false);
 
-  const { data: products = [], isLoading, isError } = useQuery({
+  const { data: products = [], isLoading } = useQuery({
     queryKey: ['products'],
     queryFn: productService.getProducts,
   });
