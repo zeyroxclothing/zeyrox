@@ -63,7 +63,7 @@ export default function Navbar() {
             <img
               src={logo}
               alt="ZEYROX"
-              className={`h-8 w-auto transition-all duration-500 drop-shadow-[0_2px_10px_rgba(5,17,187,0.1)] dark:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] ${theme === 'light' ? 'invert' : ''}`}
+              className={`h-8 w-auto transition-all duration-500 ${theme === 'light' ? 'invert' : ''}`}
             />
           </Link>
         </div>
